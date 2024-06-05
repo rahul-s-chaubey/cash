@@ -23,6 +23,7 @@ public class LoginRestServiceImpl implements LoginRestService{
 		try
 		{
 			userMaster = userMasterRespository.getUser(emailId, password);
+			
 			if(userMaster != null)
 			{	
 				String userName=null;
@@ -38,6 +39,7 @@ public class LoginRestServiceImpl implements LoginRestService{
 				loginDetailsUIVO.setUserName(userName);
 				//RolesModuleMaster rolesModule = rolesModuleDBRepository.get
 			}
+			
 			else return new LoginDetailDTO() ;
 		}
 		catch(Exception ex)

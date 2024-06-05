@@ -23,4 +23,8 @@ public interface DealerMasterRepository extends JpaRepository<DealerMaster, Inte
 	List<DealerMaster> getdealerList( );
 
 	
+	@Query("FROM DealerMaster dm WHERE dm.usertype=:usertype ")
+	List<DealerMaster> getdealerbyusertype(@Param("usertype") String usertype );
+	
+	
 }

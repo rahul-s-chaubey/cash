@@ -19,4 +19,6 @@ public interface RoleManagerRestService {
 	
 	public RoleManagerResponseWrapperDTO getpermission(Integer roleId);
 	
+	public RoleManagerResponseWrapperDTO getallroles();
+	
 }

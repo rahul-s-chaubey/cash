@@ -93,12 +93,11 @@ public class RoleManagerRestServiceImpl implements RoleManagerRestService {
 	  public RoleManagerResponseWrapperDTO getallrolelist(Integer roleId) {
 	  
 	  RoleManagerDTO rolesMasterVO = null; 
-	  Integer moduleId = 0;
+	  Integer moduleId = 2;
 	  RoleManagerResponseWrapperDTO roleMasterResponseVO = new RoleManagerResponseWrapperDTO();
 	  List<RoleManagerDTO> roleMangerUIVOList = new ArrayList<RoleManagerDTO>();
 	  
-	  List<RoleMaster> roleMasterList = RoleMasterRepository.findAll();
-	  
+	  List<RoleMaster> roleMasterList = RoleMasterRepository.getRoleList();	  
 	  
 	  for (RoleMaster rolesMaster : roleMasterList) { 
 		  rolesMasterVO = new RoleManagerDTO();
@@ -348,6 +347,31 @@ public class RoleManagerRestServiceImpl implements RoleManagerRestService {
 		  	  return roleMasterResponseVO;
 		  
 		  }
+
+
+	@Override
+	public RoleManagerResponseWrapperDTO getallroles() {
+		
+		
+		 RoleManagerDTO rolesMasterVO = null; 
+		  Integer moduleId = 0;
+		  RoleManagerResponseWrapperDTO roleMasterResponseVO = new RoleManagerResponseWrapperDTO();
+		  List<RoleManagerDTO> roleMangerUIVOList = new ArrayList<RoleManagerDTO>();
+		  
+		  List<RoleMaster> roleMasterList = RoleMasterRepository.findAll();
+		  
+		  
+		  for (RoleMaster rolesMaster : roleMasterList) { 
+			  rolesMasterVO = new RoleManagerDTO();
+			  BeanUtils.copyProperties(rolesMaster, rolesMasterVO);
+			  roleMangerUIVOList.add(rolesMasterVO);
+			  }
+		  	  roleMasterResponseVO.setRolesMasterList(roleMangerUIVOList); 
+
+			 
+			  	  return roleMasterResponseVO;
+			  
+			  }
 
 	
 	

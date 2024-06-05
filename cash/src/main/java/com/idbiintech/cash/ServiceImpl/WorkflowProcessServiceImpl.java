@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.idbiintech.cash.Commons.PlethoraConstants;
 import com.idbiintech.cash.DTO.EmployeeDetailsDTO;
+import com.idbiintech.cash.DTO.LoanApplicationDTO;
 import com.idbiintech.cash.Entity.WorkflowDetails;
 import com.idbiintech.cash.Entity.WorkflowProcess;
 import com.idbiintech.cash.Repository.RoleMasterRepository;
@@ -25,7 +26,7 @@ public class WorkflowProcessServiceImpl implements WorkflowProcessRestService {
 	@Autowired private RoleMasterRepository roleRepository;
 	
 	@Override
-	public Integer createupdateWorkflowProcess(EmployeeDetailsDTO employeeDetailsDTO, Integer moduleId,
+	public Integer createupdateWorkflowProcess(LoanApplicationDTO loanapplication, Integer moduleId,
 			Integer applicationId, String Status, String requestType) {
 
 		try {
@@ -34,21 +35,23 @@ public class WorkflowProcessServiceImpl implements WorkflowProcessRestService {
 			 WorkflowProcess workflowProcess;
 			 List<WorkflowProcess> workflowProcessList;
 			//check for the workflow
-			Boolean isWorkflowPresent = commonService.isWorkFlowPresent(moduleId, employeeDetailsDTO.getDealerMasterId());
+			Boolean isWorkflowPresent = commonService.isWorkFlowPresent(moduleId, loanapplication.getDealerMasterId());
 			
 			if(isWorkflowPresent)
 			{
-				List<WorkflowDetails> stageList = workflowDetailRepository.getStagesByModuleId(moduleId);
+				List<WorkflowDetails> stageList = workflowDetailRepository.getStagesByModuleId(moduleId, loanapplication.getDealerMasterId());
 				workflowProcessList = workflowProcessRepository.getJobRecordsById(applicationId,moduleId);
 				definedStages = workflowProcessList.size();
 				if(null == workflowProcessList || workflowProcessList.isEmpty())
 				{
 					workflowProcess = new WorkflowProcess();
 					workflowProcess.setApplicationId(applicationId);
-					workflowProcess.setDealerMasterId(employeeDetailsDTO.getDealerMasterId());
+					workflowProcess.setDealerMasterId(loanapplication.getDealerMasterId());
 					workflowProcess.setJobStatus(PlethoraConstants.PENDING);
+					workflowProcess.setStatus(PlethoraConstants.PENDING);
 					workflowProcess.setModuleId(moduleId);
-					workflowProcess.setMakerId(employeeDetailsDTO.getRoleId());
+					workflowProcess.setMakerId(loanapplication.getRoleId());
+					workflowProcess.setRoleId(stageList.get(stagesCompleted).getRoleId());
 					workflowProcess.setAssignedTo(stageList.get(stagesCompleted).getRoleId());
 					String roleName = roleRepository.findByRoleId(stageList.get(stagesCompleted).getRoleId()).getRoleName();
 					workflowProcess.setJobLabel(PlethoraConstants.PENDING + " with "+ roleName);
@@ -61,21 +64,24 @@ public class WorkflowProcessServiceImpl implements WorkflowProcessRestService {
 					workflowProcessList = workflowProcessRepository.getJobRecordsById(applicationId,moduleId);
 					workflowProcess = workflowProcessList.get(workflowProcessList.size()-1);
 					workflowProcess.setJobStatus(Status);
+					workflowProcess.setStatus(Status);
 					workflowProcessRepository.save(workflowProcess);
 					definedStages = workflowProcessList.size();
 					if(Status.equalsIgnoreCase("APPROVED") && stagesCompleted <= definedStages)
 					{
 						workflowProcess = new WorkflowProcess();
 						workflowProcess.setApplicationId(applicationId);
-						workflowProcess.setDealerMasterId(employeeDetailsDTO.getDealerMasterId());
+						workflowProcess.setDealerMasterId(loanapplication.getDealerMasterId());
 						if( stagesCompleted == definedStages)
 							workflowProcess.setJobStatus("SENT_TO_BANK");
-						else workflowProcess.setJobStatus(Status);
+						else workflowProcess.setJobStatus("PENDING");
 						workflowProcess.setModuleId(moduleId);
-						workflowProcess.setMakerId(employeeDetailsDTO.getRoleId());
+						workflowProcess.setMakerId(loanapplication.getRoleId());
+						workflowProcess.setRoleId(loanapplication.getRoleId());
 						workflowProcess.setAssignedTo(stageList.get(stagesCompleted).getRoleId());
 						String roleName = roleRepository.findByRoleId(stageList.get(stagesCompleted).getRoleId()).getRoleName();
-						workflowProcess.setJobLabel(PlethoraConstants.PENDING + " with "+ roleName);
+						workflowProcess.setJobLabel(Status + " - "+ roleName);
+						
 						workflowProcess.setRequestType(requestType);
 						workflowProcessRepository.save(workflowProcess);
 					}

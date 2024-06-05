@@ -13,7 +13,7 @@ public class UserManagerResponseWrapperDTO {
 
 	private String lastName;
 
-	private String gender;
+	private char gender;
 
 	private String birthDate;
 
@@ -97,11 +97,13 @@ public class UserManagerResponseWrapperDTO {
 		this.lastName = lastName;
 	}
 
-	public String getGender() {
+
+
+	public char getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(char gender) {
 		this.gender = gender;
 	}
 

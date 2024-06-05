@@ -30,7 +30,7 @@ public class LoanApplicationController {
 	
 	
 	@PostMapping("/savedata")
-	public ResponseEntity<ResponseUIVO> savedata(@RequestBody String request, EmployeeDetailsDTO employeeDetailsDTO
+	public ResponseEntity<ResponseUIVO> savedata(@RequestBody String request
 			 ) {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -53,7 +53,7 @@ public class LoanApplicationController {
 			
 			String requestType = "created";
 			
-			workflowprocessrestservice.createupdateWorkflowProcess(employeeDetailsDTO, moduleId, applicationId, Status, requestType);
+			workflowprocessrestservice.createupdateWorkflowProcess(loanapplication,moduleId, applicationId, Status, requestType);
 			
 			
 

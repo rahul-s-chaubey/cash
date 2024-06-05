@@ -12,7 +12,6 @@ public interface WorkflowDetailRepository extends JpaRepository<WorkflowDetails,
 	
 	public List<WorkflowDetails> findByWorkflowId(Integer workflowId);
 	
-	@Query("FROM WorkflowDetails wd where wd.moduleId =:moduleId")
-	public List<WorkflowDetails> getStagesByModuleId(@Param("moduleId") Integer moduleId);
-
+	@Query("FROM WorkflowDetails wd where wd.moduleId =:moduleId  and wd.dealerMasterId =:dealerMasterId ")
+	public List<WorkflowDetails> getStagesByModuleId(@Param("moduleId") Integer moduleId,@Param("dealerMasterId") Integer dealerMasterId);	
 }

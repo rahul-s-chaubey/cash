@@ -1,5 +1,6 @@
 package com.idbiintech.cash.Service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.idbiintech.cash.DTO.ResponseUIVO;
@@ -13,6 +14,10 @@ public interface WorkflowRestService {
 	public WorkflowMangerWrapperResponseDTO getallworkflow(Integer roleId);
 	
 	ResponseUIVO createWorkflow(WorkflowManagerRequestDTO[] workflowManagerRequestUIVO);
+	
+	ResponseUIVO createWorkflow(List<WorkflowManagerRequestDTO> workflowManagerRequestDTOList);
+	
+	ResponseUIVO createWorkflowLinkedHashMap(List<LinkedHashMap<String, String>> workflowManagerRequestDTOList);
 	
 	List<WorkflowDetails> getWorkflowById(Integer workflowId);
 	

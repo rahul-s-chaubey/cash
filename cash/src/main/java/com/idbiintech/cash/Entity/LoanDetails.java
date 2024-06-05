@@ -43,6 +43,59 @@ public class LoanDetails {
 	private Integer roleId;
 	@Column(name = "status")
 	private String status;
+	
+	@Column(name = "bank_name")
+	private String bankname;	
+	@Column(name = "car_make")
+	private String carmake;
+	@Column(name = "car_model")
+	private String carmodel;
+	@Column(name = "car_color")
+	private String carcolor;
+	@Column(name = "borrower_name")
+	private String borrowername;
+	@Column(name = "borrower_email")
+	private String borrroweemail;
+	
+	
+	
+	
+	public String getBankname() {
+		return bankname;
+	}
+	public void setBankname(String bankname) {
+		this.bankname = bankname;
+	}
+	public String getCarmake() {
+		return carmake;
+	}
+	public void setCarmake(String carmake) {
+		this.carmake = carmake;
+	}
+	public String getCarmodel() {
+		return carmodel;
+	}
+	public void setCarmodel(String carmodel) {
+		this.carmodel = carmodel;
+	}
+	public String getCarcolor() {
+		return carcolor;
+	}
+	public void setCarcolor(String carcolor) {
+		this.carcolor = carcolor;
+	}
+	public String getBorrowername() {
+		return borrowername;
+	}
+	public void setBorrowername(String borrowername) {
+		this.borrowername = borrowername;
+	}
+	public String getBorrroweemail() {
+		return borrroweemail;
+	}
+	public void setBorrroweemail(String borrroweemail) {
+		this.borrroweemail = borrroweemail;
+	}
 	public long getLoanmstId() {
 		return loanmstId;
 	}

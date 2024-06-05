@@ -24,9 +24,9 @@ public interface WorkflowProcessRepository extends JpaRepository<WorkflowProcess
 	List<WorkflowProcess> getJobRecordsById(@Param("applicationId") Integer applicationId,@Param("moduleId") Integer moduleId);
 	
 	
-	@Query("FROM WorkflowProcess wp where wp.roleId =:roleId AND wp.dealerMasterId =:dealerMasterId AND wp.status =:status")
+	@Query("FROM WorkflowProcess wp where wp.roleId =:roleId AND wp.dealerMasterId =:dealerMasterId AND wp.jobStatus =:jobStatus")
 	List<WorkflowProcess> getlistofjob(@Param("roleId") Integer roleId,
 			@Param("dealerMasterId") Integer dealerMasterId,
-			@Param("status") String status);
+			@Param("jobStatus") String status);
 
 }

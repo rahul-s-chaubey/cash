@@ -13,6 +13,7 @@ private String workflowModule;
 	
 	private String stageName;
 	
+	private Integer dealerMasterId;
 	
 	private String customerId;
 	
@@ -68,6 +69,17 @@ private String workflowModule;
 	
 	
 	private Integer stageNumber;
+
+	
+
+	public Integer getDealerMasterId() {
+		return dealerMasterId;
+	}
+
+
+	public void setDealerMasterId(Integer dealerMasterId) {
+		this.dealerMasterId = dealerMasterId;
+	}
 
 
 	public String getWorkflowModule() {

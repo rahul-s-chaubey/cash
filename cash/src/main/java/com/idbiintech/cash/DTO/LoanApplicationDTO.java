@@ -26,6 +26,38 @@ public class LoanApplicationDTO {
 	private String carcolor;
 	private String borrowername;
 	private String borroweremail;
+	private Integer roleId;
+	private Integer dealerMasterId;
+	private String status;
+	private long loanmstId;
+	
+	
+	
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public long getLoanmstId() {
+		return loanmstId;
+	}
+	public void setLoanmstId(long loanmstId) {
+		this.loanmstId = loanmstId;
+	}
+	public Integer getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
+	public Integer getDealerMasterId() {
+		return dealerMasterId;
+	}
+	public void setDealerMasterId(Integer dealerMasterId) {
+		this.dealerMasterId = dealerMasterId;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

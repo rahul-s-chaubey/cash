@@ -3,6 +3,7 @@ package com.idbiintech.cash.ServiceImpl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -106,27 +107,102 @@ public class WorkflowRestServiceImpl implements WorkflowRestService {
 
 	
 	
+
+
+	@Override
+	public List<WorkflowDetails> getWorkflowById(Integer workflowId) {
+		
+		List<WorkflowDetails> workflowDetails= new ArrayList();
+		
+		workflowDetails= workflowDetailRepository.findByWorkflowId(workflowId);
+		
+        return workflowDetails;
+		
+		
+		
+
+	}
+
+
+
+	@Override
+	public WorkflowManagerResponseDTO deleteWorkflowById(Integer workflowId) {
+		
+		
+		WorkflowMaster workflowMaster = new WorkflowMaster();
+		
+		workflowMaster = workflowMasterRepository.findByWorkflowId(workflowId);
+		workflowMaster.setIsActive(0);
+		workflowMasterRepository.save(workflowMaster);
+		
+		
+		WorkflowManagerResponseDTO workFlowManagerResponseUIVO = new WorkflowManagerResponseDTO();
+		
+		ResponseUIVO responseUIVO = new ResponseUIVO();
+	//	responseUIVO.setCustomerId(customerId);
+	//	responseUIVO.setProjectId(projectId);
+		responseUIVO.setStatus(200);
+		responseUIVO.setMessage("Workflow Deleted Sucessfully");
+		workFlowManagerResponseUIVO.setResponseUIVO(responseUIVO);
+		
+		
+		return workFlowManagerResponseUIVO;
+		
+
+	}
+
+
+
+	@Override
+	public ResponseUIVO createWorkflow(List<WorkflowManagerRequestDTO> workflowManagerRequestDTOList)
+	{
+		WorkflowMaster workflowMaster =null;
+	    WorkflowDetails workflowDetails=null;
+	    ResponseUIVO responseUIVO = new ResponseUIVO();
+		try 
+		{
+			
+			
+			for(WorkflowManagerRequestDTO dto :workflowManagerRequestDTOList )
+			{
+				workflowMaster =new WorkflowMaster();
+    		  	workflowMaster.setWorkflowName(dto.getWorkflowName());
+    			workflowMaster.setCreatedDate(new Date());		    	
+    		  	workflowMaster.setIsActive(1); 
+    		  	workflowMaster.setModuleId(1);
+    		  	
+    		  	workflowMasterRepository.save(workflowMaster);
+    		  	
+    		  	if(workflowMaster.getWorkflowId()!= null)
+    		  	{
+    		  		workflowDetails = new WorkflowDetails();
+    		  		workflowDetails.setWorkflowId(workflowMaster.getWorkflowId());
+    		  		workflowDetails.setWorkflowStageNo(dto.getStageNumber());
+    		  		workflowDetails.setWorkflowStagename(dto.getStageName());
+    		  		workflowDetails.setRoleId(Integer.parseInt(dto.getRoleId()));  		 
+    		  		workflowDetailRepository.save(workflowDetails);
+    		  	}
+    		  	
+  		      responseUIVO.setData("Data Updated Successfully in workflowdetails");
+  		      responseUIVO.setStatus(200);
+			}
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+			
+				responseUIVO.setMessage(ex.getMessage());
+			  responseUIVO.setData("Error");
+  		      responseUIVO.setStatus(200);
+		}
+	
+	return responseUIVO;
+	}
+
 	@Override
 	public ResponseUIVO createWorkflow(WorkflowManagerRequestDTO[] workflowManagerRequestUIVO) {
 
 
-//	    ResponseUIVO responseUIVO=new ResponseUIVO();
-//	    WorkflowMaster workflowMaster=new WorkflowMaster();
-//	    
-//	    BeanUtils.copyProperties(workflowManagerRequestUIVO, workflowMaster);
-//	    workflowMaster.setCreatedDate(new Date());
-//	    workflowMaster.setProjectId(1);
-//	    workflowMaster.setCreatedByRolename("rolename");
-//	    workflowMasterRepository.save(workflowMaster);
-//	    
-//	   
-//	    responseUIVO.setData("Data Inserted Successfully");
-//	    responseUIVO.setMessage(null);
-//	    responseUIVO.setStatus(201);
-//	
-//	    return responseUIVO;
-		
-		
 		
 		 Boolean isSaved=false;
 	      WorkflowMaster workflowMaster =null;
@@ -137,23 +213,23 @@ public class WorkflowRestServiceImpl implements WorkflowRestService {
 	     for(WorkflowManagerRequestDTO workflowManagerRequestUIVOObj: workflowManagerRequestUIVO) {
 	    	
 	    	  {
-	    	 workflowMaster =new WorkflowMaster();
-	    	 workflowMaster.setWorkflowName(workflowManagerRequestUIVOObj.getWorkflowName());
-	    	 workflowMaster.setWorkflowId(workflowManagerRequestUIVOObj.getWorkflowId());
-	    	 workflowMaster.setCustomerName(workflowManagerRequestUIVOObj.getCustomerName());
-	    //	 workflowMaster.setCustomerId(Integer.valueOf(workflowManagerRequestUIVOObj.getCustomerId()));
-	    	 workflowMaster.setModuleId(Integer.valueOf(workflowManagerRequestUIVOObj.getModuleId()));
-	    	// workflowMaster.setCreatedByUsername(requestUIVO.getUserName());
-	    	// workflowMaster.setCreatedByRolename(requestUIVO.getRoleName());
-	    	 workflowMaster.setCreatedDate(new Date());		    	
-	    	 workflowMaster.setIsActive(1); 
-	    	// workflowMaster.setProjectId(requestUIVO.getProjectId());
-	    	 workflowMaster.setStatus("Created");
+	    		  	workflowMaster =new WorkflowMaster();
+	    		  	workflowMaster.setWorkflowName(workflowManagerRequestUIVOObj.getWorkflowName());
+	    		  	workflowMaster.setWorkflowId(workflowManagerRequestUIVOObj.getWorkflowId());
+	    		  	workflowMaster.setCustomerName(workflowManagerRequestUIVOObj.getCustomerName());
+	    		  	//	 workflowMaster.setCustomerId(Integer.valueOf(workflowManagerRequestUIVOObj.getCustomerId()));
+	    		  	workflowMaster.setModuleId(Integer.valueOf(workflowManagerRequestUIVOObj.getModuleId()));
+	    		  	// workflowMaster.setCreatedByUsername(requestUIVO.getUserName());
+	    		  	// workflowMaster.setCreatedByRolename(requestUIVO.getRoleName());
+	    		  	workflowMaster.setCreatedDate(new Date());		    	
+	    		  	workflowMaster.setIsActive(1); 
+	    		  	// workflowMaster.setProjectId(requestUIVO.getProjectId());
+	    		  	workflowMaster.setStatus("Created");
 	    	 
-	    	 workflowMaster= workflowMasterRepository.save(workflowMaster);
+	    		  	workflowMaster= workflowMasterRepository.save(workflowMaster);
 	    	 
 	    	 
-	    	 isSaved=true;
+	    		  	isSaved=true;
 	    	 
 	    	   responseUIVO=new ResponseUIVO();
 		      responseUIVO.setData("Data Updated Successfully in workflowmaster");
@@ -204,50 +280,62 @@ public class WorkflowRestServiceImpl implements WorkflowRestService {
 	   
 		return responseUIVO;
 
+	}
+
+
+
+	@Override
+	public ResponseUIVO createWorkflowLinkedHashMap(List<LinkedHashMap<String, String>> workflowManagerRequestDTOList) {
+
+		WorkflowMaster workflowMaster =null;
+	    WorkflowDetails workflowDetails=null;
+	    ResponseUIVO responseUIVO = new ResponseUIVO();
+		try 
+		{
+			Integer workflowId = 0;
+			
+			for( LinkedHashMap<String, String> dto :workflowManagerRequestDTOList )
+			{
+				
+				if(workflowId == 0) 
+				{
+					workflowMaster =new WorkflowMaster();
+	    		  	workflowMaster.setWorkflowName(dto.get("workflowName"));
+	    			workflowMaster.setCreatedDate(new Date());		    	
+	    		  	workflowMaster.setIsActive(1); 
+	    		  	workflowMaster.setModuleId(1);
+	    		  	workflowMaster.setDealerMasterId(Integer.parseInt(dto.get("dealerMasterId")));
+	    		  	workflowMasterRepository.save(workflowMaster);
+				}
+    		  	
+    		  	if(workflowMaster.getWorkflowId()!= null)
+    		  	{
+    		  		workflowId = workflowMaster.getWorkflowId();
+    		  		workflowDetails = new WorkflowDetails();
+    		  		workflowDetails.setWorkflowId(workflowMaster.getWorkflowId());
+    		  		workflowDetails.setWorkflowStageNo(Integer.parseInt(dto.get("stageNumber")));
+    		  		workflowDetails.setWorkflowStagename(dto.get("workflowName"));
+    		  		workflowDetails.setRoleId(Integer.parseInt(dto.get("roleId"))); 
+    		  		workflowDetails.setModuleId(1);
+    		  		workflowDetails.setDealerMasterId(Integer.parseInt(dto.get("dealerMasterId")));
+    		  		workflowDetailRepository.save(workflowDetails);
+    		  	}
+    		  	
+  		     
+			}
+			 responseUIVO.setData("Data Updated Successfully in workflowdetails");
+ 		      responseUIVO.setStatus(200);
 	}    
+		catch (Exception e) {
+			e.printStackTrace();
 
-
-
-	@Override
-	public List<WorkflowDetails> getWorkflowById(Integer workflowId) {
-		
-		List<WorkflowDetails> workflowDetails= new ArrayList();
-		
-		workflowDetails= workflowDetailRepository.findByWorkflowId(workflowId);
-		
-        return workflowDetails;
-		
-		
-		
-
-	}
-
-
-
-	@Override
-	public WorkflowManagerResponseDTO deleteWorkflowById(Integer workflowId) {
-		
-		
-		WorkflowMaster workflowMaster = new WorkflowMaster();
-		
-		workflowMaster = workflowMasterRepository.findByWorkflowId(workflowId);
-		workflowMaster.setIsActive(0);
-		workflowMasterRepository.save(workflowMaster);
-		
-		
-		WorkflowManagerResponseDTO workFlowManagerResponseUIVO = new WorkflowManagerResponseDTO();
-		
-		ResponseUIVO responseUIVO = new ResponseUIVO();
-	//	responseUIVO.setCustomerId(customerId);
-	//	responseUIVO.setProjectId(projectId);
-		responseUIVO.setStatus(200);
-		responseUIVO.setMessage("Workflow Deleted Sucessfully");
-		workFlowManagerResponseUIVO.setResponseUIVO(responseUIVO);
-		
-		
-		return workFlowManagerResponseUIVO;
-		
-
-	}
+	    	   responseUIVO=new ResponseUIVO();
+		      responseUIVO.setData("Data Not Saved");
+		      responseUIVO.setStatus(400);
+	    	 
+		}
+   
+	return responseUIVO;
+}
 
 }

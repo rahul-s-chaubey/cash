@@ -1,5 +1,6 @@
 package com.idbiintech.cash.Controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,7 @@ public class WorkflowRestController {
 			ResponseUIVO responseUIVO=null;
 			
 			ObjectMapper objectMapper = new ObjectMapper();
+			List<LinkedHashMap<String, String>> workflowRequestDTOList;
 			WorkflowManagerRequestDTO[] workflowManagerRequestUIVO = null;
 			
 			try 
@@ -87,11 +89,11 @@ public class WorkflowRestController {
 				
 				
 
-				workflowManagerRequestUIVO = objectMapper.readValue(request, WorkflowManagerRequestDTO[].class);
-				
-				
-				  
-				  responseUIVO = workflowrestservice.createWorkflow(workflowManagerRequestUIVO);
+				workflowRequestDTOList = objectMapper.readValue(request, List.class);
+			//	LinkedHashMap<String, String> linkedHashMapData = workflowRequestDTOList.get(0);
+				//WorkflowManagerRequestDTO data = workflowRequestDTOList.get(0);
+				  System.out.println("test");
+				  responseUIVO = workflowrestservice.createWorkflowLinkedHashMap(workflowRequestDTOList);
 			}
 			catch(Exception ex)
 			{

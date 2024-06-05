@@ -55,6 +55,18 @@ public class WorkflowDetails {
 
 	@Column(name = "module_id", nullable = true)
 	private Integer moduleId;
+	
+	@Column(name="dealer_master_id")
+	Integer dealerMasterId;
+	
+
+	public Integer getDealerMasterId() {
+		return dealerMasterId;
+	}
+
+	public void setDealerMasterId(Integer dealerMasterId) {
+		this.dealerMasterId = dealerMasterId;
+	}
 
 	public Integer getStageId() {
 		return stageId;

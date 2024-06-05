@@ -10,7 +10,7 @@ public class PermissionRequestDTO {
 
 	private Integer view;
 
-	private Integer delete;
+	private Integer deleted;
 	private Integer checker;
 
 	private Integer imports;
@@ -49,12 +49,14 @@ public class PermissionRequestDTO {
 		this.view = view;
 	}
 
-	public Integer getDelete() {
-		return delete;
+	
+
+	public Integer getDeleted() {
+		return deleted;
 	}
 
-	public void setDelete(Integer delete) {
-		this.delete = delete;
+	public void setDeleted(Integer deleted) {
+		this.deleted = deleted;
 	}
 
 	public Integer getChecker() {

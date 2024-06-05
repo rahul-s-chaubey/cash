@@ -59,6 +59,7 @@ public class DealerManagerRestServiceImpl implements DealerManagerRestService {
 			dealermaster.setTin(dealermanager.getTin());
 			dealermaster.setBankName(dealermanager.getBankName());
 			dealermaster.setIsActive(1);
+			dealermaster.setUsertype("nonadmin");
 			
 			
 			
@@ -307,6 +308,39 @@ public class DealerManagerRestServiceImpl implements DealerManagerRestService {
 		
 
 	}
+
+
+
+
+	@Override
+	public List<DealerMaster> getDealerByUsertype(String usertype) {
+		
+
+		List<DealerMaster> dealerMaster = null;
+
+		try {
+			
+			if(usertype.equals("superadmin")) {
+				
+				dealerMaster = DealerMasterRepository.findAll();
+				
+			}else {
+		
+			dealerMaster = DealerMasterRepository.getdealerbyusertype(usertype);
+			
+			}
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+        return dealerMaster;
+	}
+	
+	
+	
+	
 	
 	}
 

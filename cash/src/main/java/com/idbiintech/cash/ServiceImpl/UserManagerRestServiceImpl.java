@@ -68,6 +68,8 @@ public class UserManagerRestServiceImpl implements UserManagerRestService {
 			usermaster.setMobileNumber(userManager.getMobileNumber());
 			usermaster.setPassword(userManager.getPassword());
 			usermaster.setUserName(userManager.getUserName());
+			usermaster.setRoleId(userManager.getRoleName());
+			usermaster.setDealerMasterId(userManager.getDealerMasterId());
 			  
 			UserMasterRepository.save(usermaster);
 			 

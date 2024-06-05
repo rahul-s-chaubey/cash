@@ -55,6 +55,38 @@ public class UserManagerDTO {
 	private Integer dbVersion;
 	
 	private Integer employeecode;
+	
+	private String usertype;
+	
+	private Integer roleName;
+	
+	private Integer dealerMasterId;
+	
+
+
+	public Integer getDealerMasterId() {
+		return dealerMasterId;
+	}
+
+	public void setDealerMasterId(Integer dealerMasterId) {
+		this.dealerMasterId = dealerMasterId;
+	}
+
+	public Integer getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(Integer roleName) {
+		this.roleName = roleName;
+	}
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 
 	public Integer getUserId() {
 		return userId;

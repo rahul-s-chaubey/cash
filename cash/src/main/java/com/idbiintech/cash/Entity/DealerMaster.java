@@ -50,6 +50,17 @@ public class DealerMaster {
 	Integer isActive;
 	
 	
+	@Column(name="user_type")
+	String usertype;
+
+
+	public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
 
 	public Integer getIsActive() {
 		return isActive;

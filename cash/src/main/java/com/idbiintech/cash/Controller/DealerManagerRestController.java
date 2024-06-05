@@ -1,5 +1,7 @@
 package com.idbiintech.cash.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import com.idbiintech.cash.DTO.DealerManagerDTO;
 import com.idbiintech.cash.DTO.DealerManagerResponseDTO;
 import com.idbiintech.cash.DTO.DealerManagerResponseWrapperDTO;
 import com.idbiintech.cash.DTO.ResponseUIVO;
+import com.idbiintech.cash.Entity.DealerMaster;
 import com.idbiintech.cash.Service.DealerManagerRestService;
 
 @CrossOrigin
@@ -186,7 +189,23 @@ public class DealerManagerRestController {
 				}
 				
 				
+				// Get Dealer By user type 
+				@GetMapping(value = "/getdealerByUsertype/{user_type}")
+				public List<DealerMaster> getDealerByUsertype(@PathVariable("user_type") String usertype) {
+					
+					List<DealerMaster> dealerManagerResponseDTO = null;
+					
+					
+					try {
+						dealerManagerResponseDTO = dealermanagerrestservice.getDealerByUsertype(usertype);		
 						
+					}
+
+					catch (Exception e) {
+						e.printStackTrace();
+					
+				}		
 				
-	
+	return dealerManagerResponseDTO;
+}
 }

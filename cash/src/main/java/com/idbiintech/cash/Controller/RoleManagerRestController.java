@@ -161,4 +161,39 @@ public class RoleManagerRestController {
 
 			}  
 
+			
+			//Get All Roles 
+			@GetMapping("/getallroles")
+			public ResponseEntity<RoleManagerResponseWrapperDTO> getallroles() {
+				
+				
+				ResponseUIVO responseUIVO = null;
+				RoleManagerResponseWrapperDTO rolesMasterVO = null;
+				HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+				try {
+
+					rolesMasterVO = RoleManagerRestService.getallroles();
+					
+				//	rolesMasterVO = RoleManagerRestService.getpermission(roleId);
+					
+					status = HttpStatus.ACCEPTED;
+
+				} catch (Exception e) {
+
+					e.printStackTrace();
+					responseUIVO = new ResponseUIVO();
+					rolesMasterVO = new RoleManagerResponseWrapperDTO();
+					responseUIVO.setMessage(e.getMessage());
+					responseUIVO.setStatus(500);
+					responseUIVO.setData(null);
+					rolesMasterVO.setResponseUIVO(responseUIVO);
+
+				}
+				return ResponseEntity.status(status).body(rolesMasterVO);
+			}
+			
+			
+			
+			
+			
 }
